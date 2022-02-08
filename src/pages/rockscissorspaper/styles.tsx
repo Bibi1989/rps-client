@@ -31,3 +31,5 @@ export const InnerContainer = styled.div`
 export const VerticalSpacing = styled.div<{ height?: number }>`
   height: ${({ height }) => (height ? `${height}px` : "30px")};
 `;
+
+export const TotalTries = styled.h4``;
