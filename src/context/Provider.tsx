@@ -9,6 +9,7 @@ import {
 } from "./actions";
 import { Context } from "./Context";
 import { reducer } from "./reducer";
+import { choicesArray } from "helper/choices";
 
 export interface InitialState {
   playerScore: number;
@@ -36,7 +37,12 @@ const Provider: React.FC = ({ children }) => {
 
   const choiceHandler = (choice: ChoiceT) => {};
 
-  const computerChoiceFunc = () => {};
+  const computerChoiceFunc = () => {
+    const index = Math.floor(Math.random() * choicesArray.length);
+    const compChoice = choicesArray.find(
+      (choice: ChoiceT) => choice.id === index
+    );
+  };
 
   const values = {
     playerScore: state.playerScore,
