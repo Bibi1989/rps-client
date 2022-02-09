@@ -2,8 +2,6 @@ import Paper from "assets/images/icons/Paper";
 import Rock from "assets/images/icons/Rock";
 import Scissors from "assets/images/icons/Scissors";
 
-import { ChoiceT } from "pages/rockscissorspaper";
-
 export const choicesArray = [
   {
     id: 0,

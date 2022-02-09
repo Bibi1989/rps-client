@@ -1,7 +1,7 @@
-import React, { createContext } from "react";
+import { createContext } from "react";
 
-import { ChoiceT } from "pages/rockscissorspaper";
-import { InitialState } from "./Provider";
+import { CONSTANTS } from "constant/variables";
+import { InitialState, ChoiceT } from "constant/types/types";
 
 interface ContextI extends InitialState {
   choiceHandler: (choice: ChoiceT) => void;
@@ -14,7 +14,7 @@ export const Context = createContext<ContextI>({
   answer: "",
   user: null,
   computer: null,
-  tries: 0,
+  tries: CONSTANTS.MAX_TRIES as number,
   choiceHandler: (choice: ChoiceT) => {},
   restartHandler: () => {},
 });

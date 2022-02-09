@@ -1,6 +1,6 @@
 import React, { cloneElement } from "react";
 
-import { ChoiceT } from "pages/rockscissorspaper";
+import { ChoiceT } from "constant/types/types";
 import { ShowPlayerStyle, ScoreDiv } from "./styles";
 
 type Props = {

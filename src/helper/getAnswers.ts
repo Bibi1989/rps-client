@@ -1,4 +1,4 @@
-import { ChoiceT } from "pages/rockscissorspaper";
+import { ChoiceT } from "constant/types/types";
 
 type functionReturn = {
   player: number;

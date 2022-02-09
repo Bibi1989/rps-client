@@ -2,21 +2,16 @@ import DisplayChoices from "components/DisplayChoices";
 import DisplayWin from "components/DisplayWin";
 import RestartGame from "components/RestartGame";
 import ShowPickAndScores from "components/ShowPickAndScore";
+import { ChoiceT } from "constant/types/types";
 import { useRSPGame } from "context/Provider";
 import { choicesArray } from "helper/choices";
+import { getWinner } from "helper/getWinner";
 import {
   Container,
   InnerContainer,
   VerticalSpacing,
   TotalTries,
 } from "./styles";
-
-export type ChoiceT = {
-  id: number;
-  icon: any;
-  title: string;
-  isPress?: boolean;
-};
 
 const RockScissorsPaper = () => {
   const {
@@ -29,6 +24,8 @@ const RockScissorsPaper = () => {
     choiceHandler,
     restartHandler,
   } = useRSPGame();
+
+  const winnerText = tries === 0 ? getWinner(playerScore, computerScore) : "";
 
   return (
     <Container>
@@ -52,7 +49,7 @@ const RockScissorsPaper = () => {
           <RestartGame onClick={restartHandler}>Restart</RestartGame>
         )}
         <VerticalSpacing />
-        <DisplayWin answer={answer ? answer : answer} />
+        <DisplayWin answer={winnerText ? winnerText : answer} />
       </InnerContainer>
     </Container>
   );
