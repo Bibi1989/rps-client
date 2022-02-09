@@ -1,6 +1,10 @@
-export const getWinner = (playerScore: number, computerScore: number): string =>
-  playerScore > computerScore
+export const getWinner = (
+  playerScore: number,
+  computerOneScore: number,
+  computerTwoScore: number
+): string =>
+  playerScore > computerOneScore
     ? "Congrat, You Won!!!"
-    : playerScore === computerScore
+    : playerScore === computerOneScore
     ? "Wow, It is a Tie"
     : "Oops, You Lost";

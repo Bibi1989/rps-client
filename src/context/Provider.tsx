@@ -4,17 +4,19 @@ import { Context } from "./Context";
 import { choicesArray } from "helper/choices";
 import { getAnswer } from "helper/getAnswers";
 import { CONSTANTS } from "constant/variables";
-import { InitialState, ChoiceT } from "constant/types/types";
+import { InitialState, ChoiceT, ModeT } from "constant/types/types";
 
 export const useRSPGame = () => useContext(Context);
 
 const Provider: React.FC = ({ children }) => {
   const [state, setState] = useState<InitialState>({
     playerScore: 0,
-    computerScore: 0,
+    computerOneScore: 0,
+    computerTwoScore: 0,
     computer: null,
     user: null,
     answer: "",
+    mode: "user",
     tries: CONSTANTS.MAX_TRIES as number,
   });
 
@@ -38,7 +40,7 @@ const Provider: React.FC = ({ children }) => {
         tries: (prev.tries -= 1),
       }));
     },
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
     [state.user?.title, state.computer?.title]
   );
 
@@ -53,13 +55,20 @@ const Provider: React.FC = ({ children }) => {
     }));
   };
 
+  const setMode = (mode: ModeT) => {
+    setState((prev) => ({
+      ...prev,
+      mode,
+    }));
+  };
+
   const restartHandler = () => {
     setState((prev) => ({
       ...prev,
       playerScore: 0,
-      computerScore: 0,
+      computerOneScore: 0,
       answer: "",
-      tries: CONSTANTS.MAX_TRIES as number,
+      tries: CONSTANTS.MAX_TRIES,
     }));
   };
 
@@ -79,17 +88,18 @@ const Provider: React.FC = ({ children }) => {
     } else if (result.message === CONSTANTS.COMPUTER_WIN_MSG) {
       setState((prev) => ({
         ...prev,
-        computerScore: (prev.computerScore += 1),
+        computerOneScore: (prev.computerOneScore += 1),
       }));
     }
 
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [state.user?.title, state.computer?.title, state.tries]);
 
   const values = {
     ...state,
     choiceHandler,
     restartHandler,
+    setMode,
   };
   return <Context.Provider value={values}>{children}</Context.Provider>;
 };
