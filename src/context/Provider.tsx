@@ -13,6 +13,7 @@ import { Context } from "./Context";
 import { reducer } from "./reducer";
 import { choicesArray } from "helper/choices";
 import { getAnswer } from "helper/getAnswers";
+import { CONSTANTS } from "constant/variables";
 
 export interface InitialState {
   playerScore: number;
@@ -29,14 +30,14 @@ const initialState: InitialState = {
   computer: null,
   user: null,
   answer: "",
-  tries: 15,
+  tries: CONSTANTS.MAX_TRIES,
 };
 
 export const useRSPGame = () => useContext(Context);
 
 const Provider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [tryTotal, setTryTotal] = useState(15);
+  const [tryTotal, setTryTotal] = useState(CONSTANTS.MAX_TRIES);
 
   const choiceHandler = (choice: ChoiceT) => {
     computerChoiceFunc();
@@ -53,6 +54,13 @@ const Provider: React.FC = ({ children }) => {
       (choice: ChoiceT) => choice.id === index
     );
     dispatch(updateComputerStateAction(compChoice));
+  };
+
+  const restartHandler = () => {
+    dispatch(updateComputerScoreAction(0));
+    dispatch(updatePlayerScoreAction(0));
+    dispatch(updateAnswerAction(""));
+    dispatch(updateTotalTriesAction(CONSTANTS.MAX_TRIES));
   };
 
   useEffect(() => {
@@ -81,6 +89,7 @@ const Provider: React.FC = ({ children }) => {
     computer: state.computer,
     tries: state.tries,
     choiceHandler,
+    restartHandler,
   };
   return <Context.Provider value={values}>{children}</Context.Provider>;
 };

@@ -4,7 +4,8 @@ import { ChoiceT } from "pages/rockscissorspaper";
 import { InitialState } from "./Provider";
 
 interface ContextI extends InitialState {
-  choiceHandler: any;
+  choiceHandler: (choice: ChoiceT) => void;
+  restartHandler: () => void;
 }
 
 export const Context = createContext<ContextI>({
@@ -15,4 +16,5 @@ export const Context = createContext<ContextI>({
   computer: null,
   tries: 0,
   choiceHandler: (choice: ChoiceT) => {},
+  restartHandler: () => {},
 });
