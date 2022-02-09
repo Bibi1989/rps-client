@@ -1,5 +1,12 @@
 import { InitialState } from "./Provider";
-import { PLAYER_SCORE, SCORES, TOTAL_TRIES } from "./types";
+import {
+  ANSWER,
+  COMPUTER,
+  PLAYER_SCORE,
+  SCORES,
+  TOTAL_TRIES,
+  USER,
+} from "./types";
 
 export type Action<T> = {
   type: string;
@@ -22,6 +29,21 @@ export const reducer = (state: InitialState, action: any) => {
       return {
         ...state,
         tries: action.payload,
+      };
+    case COMPUTER:
+      return {
+        ...state,
+        computer: action.payload,
+      };
+    case USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case ANSWER:
+      return {
+        ...state,
+        answer: action.payload,
       };
     default:
       return state;

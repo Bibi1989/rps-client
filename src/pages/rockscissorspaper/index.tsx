@@ -1,4 +1,5 @@
 import DisplayChoices from "components/DisplayChoices";
+import DisplayWin from "components/DisplayWin";
 import ShowPickAndScores from "components/ShowPickAndScore";
 import { useRSPGame } from "context/Provider";
 import { choicesArray } from "helper/choices";
@@ -17,8 +18,15 @@ export type ChoiceT = {
 };
 
 const RockScissorsPaper = () => {
-  const { tries, computerScore, playerScore, user, computer, choiceHandler } =
-    useRSPGame();
+  const {
+    tries,
+    computerScore,
+    playerScore,
+    user,
+    computer,
+    answer,
+    choiceHandler,
+  } = useRSPGame();
 
   return (
     <Container>
@@ -37,6 +45,8 @@ const RockScissorsPaper = () => {
         {tries > 0 && (
           <DisplayChoices choices={choicesArray} handleClick={choiceHandler} />
         )}
+        <VerticalSpacing />
+        <DisplayWin answer={answer ? answer : answer} />
       </InnerContainer>
     </Container>
   );

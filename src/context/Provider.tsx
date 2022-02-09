@@ -1,15 +1,18 @@
-import React, { useContext, useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 
 import { ChoiceT } from "pages/rockscissorspaper";
 import {
   updateAnswerAction,
+  updateComputerScoreAction,
   updateComputerStateAction,
+  updatePlayerScoreAction,
   updateTotalTriesAction,
   updateUserStateAction,
 } from "./actions";
 import { Context } from "./Context";
 import { reducer } from "./reducer";
 import { choicesArray } from "helper/choices";
+import { getAnswer } from "helper/getAnswers";
 
 export interface InitialState {
   playerScore: number;
@@ -35,14 +38,40 @@ const Provider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [tryTotal, setTryTotal] = useState(15);
 
-  const choiceHandler = (choice: ChoiceT) => {};
+  const choiceHandler = (choice: ChoiceT) => {
+    computerChoiceFunc();
+    dispatch(updateUserStateAction(choice));
+    const result = getAnswer(state.user as ChoiceT, state.computer as ChoiceT);
+    dispatch(updateAnswerAction(result.message));
+    setTryTotal((prev: number) => (prev -= 1));
+    dispatch(updateTotalTriesAction(tryTotal));
+  };
 
   const computerChoiceFunc = () => {
     const index = Math.floor(Math.random() * choicesArray.length);
     const compChoice = choicesArray.find(
       (choice: ChoiceT) => choice.id === index
     );
+    dispatch(updateComputerStateAction(compChoice));
   };
+
+  useEffect(() => {
+    const result = getAnswer(state.user, state.computer);
+
+    dispatch(updateAnswerAction(result.message));
+
+    if (result.message === "YOU WIN!!!") {
+      dispatch(updatePlayerScoreAction((state.playerScore += 1)));
+    } else if (result.message === "COMPUTER WIN!!!") {
+      dispatch(updateComputerScoreAction((state.computerScore += 1)));
+    }
+  }, [
+    state.user?.title,
+    state.computer?.title,
+    updateComputerScoreAction,
+    updatePlayerScoreAction,
+    tryTotal,
+  ]);
 
   const values = {
     playerScore: state.playerScore,
