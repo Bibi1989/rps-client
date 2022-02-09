@@ -41,7 +41,7 @@ export const getAnswer = (
     case "paperpaper":
       return {
         ...scores,
-        message: "It is a Tie!!!",
+        message: CONSTANTS.DRAW,
       };
     default:
       return caseValue
@@ -83,7 +83,7 @@ export const getComputerAnswer = (
     case "paperpaper":
       return {
         ...scores,
-        message: "It is a Tie!!!",
+        message: CONSTANTS.DRAW,
       };
     default:
       return caseValue

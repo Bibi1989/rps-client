@@ -1,7 +1,6 @@
 export const getWinner = (
   playerScore: number,
-  computerOneScore: number,
-  computerTwoScore: number
+  computerOneScore: number
 ): string =>
   playerScore > computerOneScore
     ? "Congrat, You Won!!!"

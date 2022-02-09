@@ -16,7 +16,7 @@ export const Container = styled.div`
 export const InnerContainer = styled.div`
   max-width: 600px;
   width: 100%;
-  height: 500px;
+  height: 600px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;

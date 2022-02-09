@@ -1,10 +1,14 @@
+import { Modal } from "components/commons/Modal";
 import DisplayChoices from "components/DisplayChoices";
 import DisplayWin from "components/DisplayWin";
 import RestartGame from "components/RestartGame";
 import SetMode from "components/SetMode";
 import ShowPickAndScores from "components/ShowPickAndScore";
 import StartGame from "components/StartGame";
-import { ContextI } from "context/Context";
+import { CVCContextI } from "context/CVC/Context";
+import { useCVCGame } from "context/CVC/Provider";
+import { useLayout } from "context/Layout/Provider";
+import { PVCContextI } from "context/PVC/Context";
 import { choicesArray } from "helper/choices";
 import { getWinner } from "helper/getWinner";
 import {
@@ -13,56 +17,78 @@ import {
   VerticalSpacing,
   TotalTries,
 } from "pages/rockscissorspaper/styles";
+import { useEffect, useState } from "react";
 
 type Props = {
-  state: ContextI;
+  state: CVCContextI | PVCContextI;
+  scoreOne: number;
+  scoreTwo: number;
+  draw: number;
+  playerOne: any;
+  playerTwo: any;
+  playGame?: (choice: any) => void;
+  startCompPlay?: (choice: any) => void;
+  reset: () => void;
 };
 
-const GameMode: React.FC<Props> = ({ state }) => {
-  const {
-    tries,
-    computerTwoScore,
-    playerScore,
-    computerScore,
-    user,
-    computer,
-    answer,
-    mode,
-    choiceHandler,
-    restartHandler,
-    setMode,
-    playComputerVsComputer,
-  } = state;
+const GameMode: React.FC<Props> = ({
+  state,
+  scoreOne,
+  scoreTwo,
+  draw,
+  playerOne,
+  playerTwo,
+  playGame,
+  reset,
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
 
-  const winnerText =
-    tries === 0 ? getWinner(playerScore, computerScore, computerTwoScore) : "";
+  const { tries, answer } = state;
 
-  const playerOne = {
-    score: playerScore,
-    player: user,
+  const { playComputerVsComputer } = useCVCGame();
+  const { mode, setMode } = useLayout();
+
+  const winnerText = tries === 0 ? getWinner(scoreOne, scoreTwo) : "";
+
+  const playerOneObj = {
+    score: scoreOne,
+    player: playerOne,
   };
 
-  const playerTwo = {
-    score: computerScore,
-    player: computer,
+  const playerTwoObj = {
+    score: scoreTwo,
+    player: playerTwo,
   };
+
+  useEffect(() => {
+    if (tries === 0) {
+      setIsVisible(true);
+    }
+
+    // eslint-disable-next-line
+  }, [winnerText]);
+
   return (
     <Container>
       <InnerContainer>
         <h2>ROCK SCISSORS PAPER</h2>
         <VerticalSpacing />
-        <SetMode setMode={setMode} mode={mode} />
+        <SetMode setMode={setMode} mode={mode} reset={reset} />
         <VerticalSpacing height={20} />
         <TotalTries>Tries: {tries}</TotalTries>
         <VerticalSpacing height={20} />
         <ShowPickAndScores
-          playerOne={playerOne}
-          playerTwo={playerTwo}
+          playerOne={playerOneObj}
+          playerTwo={playerTwoObj}
+          draw={draw}
           mode={mode}
         />
         <VerticalSpacing height={20} />
         {tries > 0 && mode === "user" && (
-          <DisplayChoices choices={choicesArray} handleClick={choiceHandler} />
+          <DisplayChoices
+            choices={choicesArray}
+            handleClick={playGame ? playGame : () => {}}
+          />
         )}
         <VerticalSpacing height={20} />
         {mode === "computer" && (
@@ -70,11 +96,41 @@ const GameMode: React.FC<Props> = ({ state }) => {
         )}
         <VerticalSpacing height={20} />
         {tries === 0 && (
-          <RestartGame onClick={restartHandler}>Restart game</RestartGame>
+          <RestartGame
+            onClick={() => {
+              if (reset) {
+                reset();
+              }
+              setIsVisible(false);
+            }}
+          >
+            Restart game
+          </RestartGame>
         )}
-        <VerticalSpacing />
+        <VerticalSpacing height={20} />
         <DisplayWin answer={winnerText ? winnerText : answer} />
       </InnerContainer>
+
+      <Modal isVisible={isVisible} toggleVisibility={() => setIsVisible(false)}>
+        <ShowPickAndScores
+          playerOne={playerOneObj}
+          playerTwo={playerTwoObj}
+          draw={draw}
+          mode={mode}
+          hideDraw={true}
+        />
+        <DisplayWin answer={winnerText ? winnerText : answer} />
+        <RestartGame
+          onClick={() => {
+            if (reset) {
+              reset();
+            }
+            setIsVisible(false);
+          }}
+        >
+          Restart game
+        </RestartGame>
+      </Modal>
     </Container>
   );
 };

@@ -5,17 +5,31 @@ import { ModeT } from "constant/types/types";
 
 type Props = {
   setMode: (mode: ModeT) => void;
-  mode: ModeT;
+  mode: ModeT | string;
+  reset: () => void;
 };
 
-const SetMode: React.FC<Props> = ({ setMode, mode }) => {
+const SetMode: React.FC<Props> = ({ setMode, mode, reset }) => {
   return (
     <Container>
+      <h4>Select Game Mode</h4>
       <Row>
-        <Col active={mode === "user"} onClick={() => setMode("user")}>
+        <Col
+          active={mode === "user"}
+          onClick={() => {
+            setMode("user");
+            reset();
+          }}
+        >
           Player vs Computer
         </Col>
-        <Col active={mode === "computer"} onClick={() => setMode("computer")}>
+        <Col
+          active={mode === "computer"}
+          onClick={() => {
+            setMode("computer");
+            reset();
+          }}
+        >
           Computer vs Computer
         </Col>
       </Row>
