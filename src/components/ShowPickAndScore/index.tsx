@@ -1,4 +1,4 @@
-import React, { cloneElement } from "react";
+import React from "react";
 
 import { ChoiceT, ModeT } from "constant/types/types";
 import { ShowPlayerStyle, ScoreDiv } from "./styles";

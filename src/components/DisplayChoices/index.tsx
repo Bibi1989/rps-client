@@ -1,4 +1,4 @@
-import React, { cloneElement } from "react";
+import React from "react";
 
 import { Action, ActionsBtn } from "./styles";
 import { ChoiceT } from "constant/types/types";
