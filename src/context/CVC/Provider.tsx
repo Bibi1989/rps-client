@@ -93,7 +93,7 @@ const CVCProvider: React.FC = ({ children }) => {
         clearTimeout(timer);
 
         if (total !== state.tries) playComputerVsComputer();
-      }, 1000);
+      }, 1500);
     };
   })();
 
