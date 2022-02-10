@@ -5,9 +5,9 @@ import RestartGame from "components/RestartGame";
 import SetMode from "components/SetMode";
 import ShowPickAndScores from "components/ShowPickAndScore";
 import StartGame from "components/StartGame";
+import { ChoiceT, ModeT } from "constant/types/types";
 import { CVCContextI } from "context/CVC/Context";
 import { useCVCGame } from "context/CVC/Provider";
-import { useLayout } from "context/Layout/Provider";
 import { PVCContextI } from "context/PVC/Context";
 import { choicesArray } from "helper/choices";
 import { getWinner } from "helper/getWinner";
@@ -24,11 +24,13 @@ type Props = {
   scoreOne: number;
   scoreTwo: number;
   draw: number;
-  playerOne: any;
-  playerTwo: any;
+  mode: ModeT;
+  playerOne: ChoiceT | null;
+  playerTwo: ChoiceT | null;
   playGame?: (choice: any) => void;
   startCompPlay?: (choice: any) => void;
   reset: () => void;
+  setMode: (mode: ModeT) => void;
 };
 
 const GameMode: React.FC<Props> = ({
@@ -40,13 +42,14 @@ const GameMode: React.FC<Props> = ({
   playerTwo,
   playGame,
   reset,
+  mode,
+  setMode
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const { tries, answer } = state;
 
   const { playComputerVsComputer } = useCVCGame();
-  const { mode, setMode } = useLayout();
 
   const winnerText = tries === 0 ? getWinner(scoreOne, scoreTwo, mode) : "";
 
@@ -75,7 +78,7 @@ const GameMode: React.FC<Props> = ({
         <VerticalSpacing />
         <SetMode setMode={setMode} mode={mode} reset={reset} />
         <VerticalSpacing height={20} />
-        <h4 className='tries_text'>Number of moves</h4>
+        <h4 className="tries_text">Number of moves</h4>
         <TotalTries>Tries: {tries}</TotalTries>
         <VerticalSpacing height={20} />
         <ShowPickAndScores

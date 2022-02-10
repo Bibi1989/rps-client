@@ -3,6 +3,7 @@ import { usePVCGame } from "context/PVC/Provider";
 import { useCVCGame } from "context/CVC/Provider";
 import { Container } from "./styles";
 import { useLayout } from "context/Layout/Provider";
+import { ModeT } from "constant/types/types";
 
 const RockScissorsPaper = () => {
   const userState = usePVCGame();
@@ -27,7 +28,8 @@ const RockScissorsPaper = () => {
     playComputerVsComputer,
     restartHandler: compReset,
   } = computerState;
-  const { mode } = layout;
+
+  const { mode, setMode } = layout;
 
   return (
     <Container>
@@ -41,6 +43,8 @@ const RockScissorsPaper = () => {
           playerTwo={computer}
           playGame={choiceHandler}
           reset={playerReset}
+          setMode={setMode}
+          mode={mode as ModeT}
         />
       ) : (
         <GameMode
@@ -52,6 +56,8 @@ const RockScissorsPaper = () => {
           playerTwo={computerTwo}
           startCompPlay={playComputerVsComputer}
           reset={compReset}
+          setMode={setMode}
+          mode={mode as ModeT}
         />
       )}
     </Container>
