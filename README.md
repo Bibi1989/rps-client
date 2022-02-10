@@ -37,7 +37,7 @@ The game can be play in two mode, Player vs Computer and Computer vs Computer, t
 
 #### Example:   
 
-[ PRETEND SCREEN SHOT IS HERE ]
+![Screenshot 2022-02-10 at 15 46 49](https://user-images.githubusercontent.com/21135208/153433993-43d81873-af28-4df1-88de-e52e15a7b6d2.png)
 
 [ PRETEND OTHER SCREEN SHOT IS HERE ]  
  
