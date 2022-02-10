@@ -8,3 +8,11 @@ export const CONSTANTS = {
   GAME_MODE_USER: "user",
   GAME_MODE_COMPUTER: "computer",
 };
+
+export const WINNER_TEXT = {
+  PLAYER_WIN: "Congrat, You Won!!!",
+  COMPUTER_ONE_WIN: "Computer One Wins",
+  COMPUTER_TWO_WIN: "Computer Two Wins",
+  DRAW: "Wow, It is a Tie",
+  LOST: "Oops, You Lost",
+};
