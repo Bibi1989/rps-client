@@ -28,7 +28,7 @@ const ShowPickAndScores: React.FC<Props> = ({
       <ScoreDiv>
         <h4>{mode === "user" ? "Your Choice" : "Computer One Choice"}</h4>
         <div className="icon">
-          {playerOne?.player?.icon && cloneElement(playerOne?.player?.icon)}
+          <i className={`fas fa-hand-${playerOne?.player?.title}`}></i>
         </div>
         <h4>{playerOne.score}</h4>
       </ScoreDiv>
@@ -36,8 +36,8 @@ const ShowPickAndScores: React.FC<Props> = ({
         <ScoreDiv>
           <h4>Draw</h4>
           <div className="icon">
-            {playerOne?.player?.icon && cloneElement(playerOne?.player?.icon)}{" "}
-            {playerTwo?.player?.icon && cloneElement(playerTwo.player?.icon)}
+            <i className={`fas fa-hand-${playerOne?.player?.title}`}></i>{" "}
+            <i className={`fas fa-hand-${playerTwo?.player?.title}`}></i>
           </div>
           <h4>{draw}</h4>
         </ScoreDiv>
@@ -45,7 +45,7 @@ const ShowPickAndScores: React.FC<Props> = ({
       <ScoreDiv>
         <h4>{mode === "user" ? "Computer Choice" : "Computer Two Choice"}</h4>
         <div>
-          {playerTwo?.player?.icon && cloneElement(playerTwo.player?.icon)}
+          <i className={`fas fa-hand-${playerTwo?.player?.title}`}></i>
         </div>
         <h4>{playerTwo.score}</h4>
       </ScoreDiv>

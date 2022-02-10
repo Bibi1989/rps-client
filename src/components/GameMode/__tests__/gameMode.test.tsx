@@ -5,8 +5,6 @@ import GameMode from "../";
 import { CVCContextI } from "context/CVC/Context";
 import { PVCContextI } from "context/PVC/Context";
 import { ChoiceT, ModeT } from "constant/types/types";
-import Rock from "assets/images/icons/Rock";
-import Scissors from "assets/images/icons/Scissors";
 
 let documentBody: RenderResult;
 
@@ -27,13 +25,11 @@ type Props = {
 const playerOne = {
   id: 1,
   title: "rock",
-  icon: <Rock />,
 };
 
 const playerTwo = {
   id: 1,
   title: "rock",
-  icon: <Scissors />,
 };
 
 type ObjT = {

@@ -13,7 +13,7 @@ const DisplayChoices: React.FC<Props> = ({ choices, handleClick }) => {
     <ActionsBtn>
       {choices.map((choice) => (
         <Action key={choice.id} onClick={() => handleClick(choice)}>
-          {cloneElement(choice.icon)}
+          <i className={`fas fa-hand-${choice.title}`}></i>
           <p style={{}}>{choice.title}</p>
         </Action>
       ))}

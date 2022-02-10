@@ -20,6 +20,15 @@ export const ShowPlayerStyle = styled.div`
 export const ScoreDiv = styled.div`
   text-align: center;
 
+  i {
+    font-size: 3.5em;
+    color: #5482B1;
+
+    @media (max-width: 460px) {
+      font-size: 2.5em;
+    }
+  }
+
   h4 {
     margin-bottom: 10px;
 

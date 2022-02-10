@@ -24,7 +24,6 @@ export interface CompInitialState {
 
 export type ChoiceT = {
   id: number;
-  icon: any;
   title: string;
   isPress?: boolean;
 };
