@@ -12,9 +12,9 @@ const move = keyframes`
 export const ShowPlayerStyle = styled.div`
   display: flex;
   justify-content: space-between;
-  max-width: 500;
+  max-width: 500px;
   width: 100%;
-  padding: 0px 90px;
+  padding: 0px 10px;
 `;
 
 export const ScoreDiv = styled.div`
@@ -22,6 +22,10 @@ export const ScoreDiv = styled.div`
 
   h4 {
     margin-bottom: 10px;
+
+    @media (max-width: 660px) {
+      font-size: 12px;
+    }
   }
 
   .icon {

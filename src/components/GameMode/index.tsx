@@ -48,7 +48,7 @@ const GameMode: React.FC<Props> = ({
   const { playComputerVsComputer } = useCVCGame();
   const { mode, setMode } = useLayout();
 
-  const winnerText = tries === 0 ? getWinner(scoreOne, scoreTwo) : "";
+  const winnerText = tries === 0 ? getWinner(scoreOne, scoreTwo, mode) : "";
 
   const playerOneObj = {
     score: scoreOne,
@@ -75,6 +75,7 @@ const GameMode: React.FC<Props> = ({
         <VerticalSpacing />
         <SetMode setMode={setMode} mode={mode} reset={reset} />
         <VerticalSpacing height={20} />
+        <h4 className='tries_text'>Number of moves</h4>
         <TotalTries>Tries: {tries}</TotalTries>
         <VerticalSpacing height={20} />
         <ShowPickAndScores
@@ -111,7 +112,13 @@ const GameMode: React.FC<Props> = ({
         <DisplayWin answer={winnerText ? winnerText : answer} />
       </InnerContainer>
 
-      <Modal isVisible={isVisible} toggleVisibility={() => setIsVisible(false)}>
+      <Modal
+        isVisible={isVisible}
+        toggleVisibility={() => {
+          setIsVisible(false);
+          reset();
+        }}
+      >
         <ShowPickAndScores
           playerOne={playerOneObj}
           playerTwo={playerTwoObj}
@@ -120,6 +127,7 @@ const GameMode: React.FC<Props> = ({
           hideDraw={true}
         />
         <DisplayWin answer={winnerText ? winnerText : answer} />
+        <VerticalSpacing />
         <RestartGame
           onClick={() => {
             if (reset) {

@@ -1,8 +1,8 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { Context } from "./Context";
 import { choicesArray } from "helper/choices";
-import { getAnswer } from "helper/getAnswers";
+import { getComputerAnswer } from "helper/getAnswers";
 import { CONSTANTS } from "constant/variables";
 import { ChoiceT, ModeT, CompInitialState } from "constant/types/types";
 
@@ -29,6 +29,7 @@ const CVCProvider: React.FC = ({ children }) => {
       ...prev,
       computerOne: compChoice,
     }));
+    return compChoice;
   };
 
   const computerTwoChoiceFunc = () => {
@@ -40,40 +41,61 @@ const CVCProvider: React.FC = ({ children }) => {
       ...prev,
       computerTwo: compChoice,
     }));
+    return compChoice;
   };
 
-  const playComputerVsComputer = useCallback(() => {
-    restartHandler();
+  const playComputerVsComputer = (() => {
+    let total: number = 0;
+    let timer: number | any;
+    return () => {
+      const choiceOne = computerOneChoiceFunc();
+      const choiceTwo = computerTwoChoiceFunc();
 
-    let time: number = CONSTANTS.MAX_TRIES;
+      const result = getComputerAnswer(
+        choiceOne as ChoiceT,
+        choiceTwo as ChoiceT
+      );
 
-    let interval = setInterval(() => {
-      if (time < 1) {
-        console.log(state.tries);
-        clearInterval(interval);
-      } else {
-        const result = getAnswer(
-          state.computerOne as ChoiceT,
-          state.computerTwo as ChoiceT
-        );
+      setState((prev) => ({
+        ...prev,
+        answer: result.message,
+      }));
+      setState((prev) => ({
+        ...prev,
+        tries: (prev.tries -= 1),
+      }));
+
+      setState((prev) => ({
+        ...prev,
+        answer: result.message,
+      }));
+
+      if (result.message === CONSTANTS.COMPUTER_ONE_WIN_MSG) {
         setState((prev) => ({
           ...prev,
-          answer: result.message,
+          computerOneScore: (prev.computerOneScore += 1),
         }));
+      } else if (result.message === CONSTANTS.COMPUTER_TWO_WIN_MSG) {
         setState((prev) => ({
           ...prev,
-          tries: (prev.tries -= 1),
+          computerTwoScore: (prev.computerTwoScore += 1),
         }));
-
-        time -= 1;
-
-        computerOneChoiceFunc();
-        computerTwoChoiceFunc();
+      } else if (result.message === CONSTANTS.DRAW) {
+        setState((prev) => ({
+          ...prev,
+          draw: (prev.draw += 1),
+        }));
       }
-    }, 1500);
 
-    // eslint-disable-next-line
-  }, [getAnswer, state.computerOne, state]);
+      total += 1;
+
+      timer = setTimeout(() => {
+        clearTimeout(timer);
+
+        if (total !== state.tries) playComputerVsComputer();
+      }, 1000);
+    };
+  })();
 
   const setMode = (mode: ModeT) => {
     setState((prev) => ({
@@ -94,37 +116,6 @@ const CVCProvider: React.FC = ({ children }) => {
       tries: CONSTANTS.MAX_TRIES,
     });
   };
-
-  useEffect(() => {
-    const result = getAnswer(
-      state.computerOne as ChoiceT,
-      state.computerTwo as ChoiceT
-    );
-
-    setState((prev) => ({
-      ...prev,
-      answer: result.message,
-    }));
-
-    if (result.message === CONSTANTS.PLAYER_WIN_MSG) {
-      setState((prev) => ({
-        ...prev,
-        computerOneScore: (prev.computerOneScore += 1),
-      }));
-    } else if (result.message === CONSTANTS.COMPUTER_WIN_MSG) {
-      setState((prev) => ({
-        ...prev,
-        computerTwoScore: (prev.computerTwoScore += 1),
-      }));
-    } else if (result.message === CONSTANTS.DRAW) {
-      setState((prev) => ({
-        ...prev,
-        draw: (prev.draw += 1),
-      }));
-    }
-
-    // eslint-disable-next-line
-  }, [state.computerOne?.title, state.tries]);
 
   const values = {
     ...state,

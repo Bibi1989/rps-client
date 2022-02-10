@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   h4 {
     text-align: center;
+    margin-bottom: 20px;
   }
 `;
 export const Row = styled.div`

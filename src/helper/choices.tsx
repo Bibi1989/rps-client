@@ -5,19 +5,19 @@ import Scissors from "assets/images/icons/Scissors";
 export const choicesArray = [
   {
     id: 0,
-    icon: <Rock width={"4em"} height={"4em"} />,
+    icon: <Rock width={"3em"} height={"3em"} />,
     title: "rock",
     isPress: true,
   },
   {
     id: 1,
-    icon: <Scissors width={"4em"} />,
+    icon: <Scissors width={"3em"} height={"3em"} />,
     title: "scissors",
     isPress: false,
   },
   {
     id: 2,
-    icon: <Paper width={"4em"} />,
+    icon: <Paper width={"3em"} height={"3em"} />,
     title: "paper",
     isPress: false,
   },
