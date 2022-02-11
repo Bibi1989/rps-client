@@ -13,7 +13,6 @@ type Props = {
   playerTwo: PlayerT;
   mode: ModeT | string;
   draw: number;
-  hideDraw?: boolean;
 };
 
 const ShowPickAndScores: React.FC<Props> = ({
@@ -21,33 +20,34 @@ const ShowPickAndScores: React.FC<Props> = ({
   playerTwo,
   draw,
   mode,
-  hideDraw = false,
 }) => {
   return (
     <ShowPlayerStyle>
       <ScoreDiv>
         <h4>{mode === "user" ? "Your Choice" : "Computer One Choice"}</h4>
         <div className="icon">
-          <i className={`fas fa-hand-${playerOne?.player?.title}`}></i>
+          <i className={`fas fa-hand-${playerOne?.player?.title}`}>
+            {!playerTwo?.player?.title && "?"}
+          </i>
+          <h4 className="score">{playerOne.score}</h4>
         </div>
-        <h4>{playerOne.score}</h4>
       </ScoreDiv>
-      {!hideDraw && (
-        <ScoreDiv>
-          <h4>Draw</h4>
-          <div className="icon">
-            <i className={`fas fa-hand-${playerOne?.player?.title}`}></i>{" "}
-            <i className={`fas fa-hand-${playerTwo?.player?.title}`}></i>
-          </div>
-          <h4>{draw}</h4>
-        </ScoreDiv>
-      )}
+      <ScoreDiv>
+        <h4>Draw</h4>
+        <div className="icon">
+          <i className={`fas fa-hand-${playerOne?.player?.title} draw`}></i>{" "}
+          <i className={`fas fa-hand-${playerTwo?.player?.title} draw`}></i>
+          <h4 className="score">{draw}</h4>
+        </div>
+      </ScoreDiv>
       <ScoreDiv>
         <h4>{mode === "user" ? "Computer Choice" : "Computer Two Choice"}</h4>
-        <div>
-          <i className={`fas fa-hand-${playerTwo?.player?.title}`}></i>
+        <div className="icon">
+          <i className={`fas fa-hand-${playerTwo?.player?.title}`}>
+            {!playerTwo?.player?.title && "?"}
+          </i>
+          <h4 className="score">{playerTwo.score}</h4>
         </div>
-        <h4>{playerTwo.score}</h4>
       </ScoreDiv>
     </ShowPlayerStyle>
   );

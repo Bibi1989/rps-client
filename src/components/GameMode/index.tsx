@@ -43,7 +43,7 @@ const GameMode: React.FC<Props> = ({
   playGame,
   reset,
   mode,
-  setMode
+  setMode,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -128,7 +128,6 @@ const GameMode: React.FC<Props> = ({
           playerTwo={playerTwoObj}
           draw={draw}
           mode={mode}
-          hideDraw={true}
         />
         <DisplayWin answer={winnerText ? winnerText : answer} />
         <VerticalSpacing />
