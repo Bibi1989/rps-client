@@ -12,23 +12,49 @@ const move = keyframes`
 export const ActionsBtn = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  justify-content: center;
+  place-items: center;
   text-align: center;
   max-width: 600px;
   width: 100%;
   padding: 10px 20px;
+
+  @media (max-width: 460px) {
+    padding: 10px 0px;
+  }
 `;
 
-export const Action = styled.div`
+export const Action = styled.div<{ color?: string }>`
   cursor: pointer;
+  text-align: center;
+  border: 3px dashed ${({ color }) => (color ? color : "#555555")};
+  border-radius: 50px;
+  width: 6em;
+  height: 6em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 
   i {
     font-size: 3.5em;
-    /* color: #5482b1; */
+    color: ${({ color }) => (color ? color : "#555555")};
+  }
 
-    @media (max-width: 460px) {
-      font-size: 2.5em;
+  p {
+    font-size: 14px;
+  }
+
+  @media (max-width: 460px) {
+    width: 4em;
+    height: 4em;
+
+    i {
+      font-size: 2em;
+    }
+
+    p {
+      font-size: 10px;
     }
   }
 

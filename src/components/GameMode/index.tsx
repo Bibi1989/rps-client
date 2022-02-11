@@ -91,6 +91,7 @@ const GameMode: React.FC<Props> = ({
         {tries > 0 && mode === "user" && (
           <DisplayChoices
             choices={choicesArray}
+            answer={answer}
             handleClick={playGame ? playGame : () => {}}
           />
         )}

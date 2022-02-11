@@ -12,6 +12,7 @@ export const getWinner = (
       : WINNER_TEXT.COMPUTER_TWO_WIN;
   const wonMessage = mode === "user" ? WINNER_TEXT.PLAYER_WIN : side;
   const lostMessage = mode === "user" ? WINNER_TEXT.LOST : side;
+
   return playerScore > computerOneScore
     ? wonMessage
     : playerScore === computerOneScore
